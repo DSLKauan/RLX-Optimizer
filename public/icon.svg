@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2744" />
+      <stop offset="50%" stop-color="#0E1626" />
+      <stop offset="100%" stop-color="#070B13" />
+    </linearGradient>
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#60A5FA" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+  </defs>
+  <!-- One UI Squircle Container -->
+  <rect x="24" y="24" width="464" height="464" rx="120" ry="120" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="6" />
+  
+  <!-- Subtle Glow -->
+  <circle cx="256" cy="240" r="140" fill="#2563EB" opacity="0.18" />
+
+  <!-- Speedometer Arc -->
+  <path d="M 130 330 A 140 140 0 1 1 382 330" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="16" stroke-linecap="round" />
+  <path d="M 130 330 A 140 140 0 1 1 340 180" fill="none" stroke="url(#accentGrad)" stroke-width="16" stroke-linecap="round" />
+
+  <!-- Stylized Gamepad / Bolt Center -->
+  <g transform="translate(186, 170)">
+    <!-- Game Controller Glyph -->
+    <path d="M 10 35 C 10 15, 30 0, 70 0 C 110 0, 130 15, 130 35 C 130 75, 115 125, 95 125 C 85 125, 78 110, 70 110 C 62 110, 55 125, 45 125 C 25 125, 10 75, 10 35 Z" fill="url(#neonGrad)" />
+    <!-- D-pad & Buttons -->
+    <rect x="36" y="32" width="6" height="20" rx="3" fill="#ffffff" />
+    <rect x="29" y="39" width="20" height="6" rx="3" fill="#ffffff" />
+    <circle cx="95" cy="38" r="4.5" fill="#ffffff" />
+    <circle cx="107" cy="48" r="4.5" fill="#ffffff" />
+    <circle cx="83" cy="48" r="4.5" fill="#ffffff" />
+  </g>
+
+  <!-- 120Hz Badge Text -->
+  <text x="256" y="395" text-anchor="middle" fill="#93C5FD" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="800" letter-spacing="2">120Hz ULTRA</text>
+  <text x="256" y="435" text-anchor="middle" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" letter-spacing="3">S20+ BOOST</text>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "RoBoost Launcher - Roblox S20+",
+  "short_name": "RoBoost",
+  "description": "Launcher e otimizador de Roblox para Galaxy S20+ com FastFlags e 120 FPS",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

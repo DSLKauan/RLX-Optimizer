@@ -1,0 +1,6 @@
+{
+  "name": "RoBoost Launcher - Roblox Optimizer S20+",
+  "description": "Launcher e otimizador de Roblox para Samsung Galaxy S20+ e Android com FastFlags, 120 FPS e inicialização rápida.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
