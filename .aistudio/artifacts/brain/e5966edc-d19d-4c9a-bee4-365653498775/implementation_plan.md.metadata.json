@@ -1,6 +1,6 @@
 {
-  "summary": "Plano de implementação do RoBoost Launcher & Optimizer para Android (Galaxy S20+), com suporte a FastFlags, gerador ClientAppSettings.json, perfis de otimização de FPS/120Hz, inicializador roblox:// e interface One UI Samsung.",
-  "updatedAt": "2026-10-14T11:04:59.859572126Z",
+  "summary": "Plano de reformulação para o RoBoost Mobile Universal com suporte nativo Capacitor para APK, remoção de referências ao S20+, detecção automática de tela (60Hz a 144Hz) e perfis para qualquer celular Android.",
+  "updatedAt": "2026-10-14T23:14:09.753743039Z",
   "requestFeedback": true,
   "userFacing": true
 }

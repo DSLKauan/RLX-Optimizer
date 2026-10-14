@@ -1,17 +1,20 @@
 import React from 'react';
-import { Smartphone, Download, Activity, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Smartphone, Download, Activity, Sparkles, CheckCircle2, Zap } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 import { triggerHaptic } from '../utils/haptics';
 import { OptimizationProfile } from '../types';
+import { DeviceHardwareInfo } from '../hooks/useDeviceHardware';
 
-interface HeaderOneUIProps {
+interface HeaderUniversalProps {
   currentProfile: OptimizationProfile;
+  hardware: DeviceHardwareInfo;
   onOpenLatencyModal: () => void;
   onQuickProfileClick: () => void;
 }
 
-export const HeaderOneUI: React.FC<HeaderOneUIProps> = ({
+export const HeaderUniversal: React.FC<HeaderUniversalProps> = ({
   currentProfile,
+  hardware,
   onOpenLatencyModal,
   onQuickProfileClick,
 }) => {
@@ -23,11 +26,11 @@ export const HeaderOneUI: React.FC<HeaderOneUIProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 bg-[#0B0F19]/90 backdrop-blur-xl border-b border-slate-800/80 px-4 py-3">
+    <header className="sticky top-0 z-30 bg-[#0B0F19]/95 backdrop-blur-xl border-b border-slate-800/80 px-4 py-3">
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
-        {/* Brand & Phone Indicator */}
+        {/* Brand & Hardware Badge */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-black text-lg">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-black text-lg border border-blue-400/20">
             R
           </div>
           <div>
@@ -35,15 +38,19 @@ export const HeaderOneUI: React.FC<HeaderOneUIProps> = ({
               <h1 className="text-base font-bold text-white tracking-tight leading-none">
                 RoBoost
               </h1>
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/25">
-                S20+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/25 uppercase tracking-wide">
+                Mobile APK
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 mt-0.5">
-              <Smartphone className="w-3 h-3 text-emerald-400" />
-              <span>Galaxy S20+ One UI</span>
+              <Smartphone className="w-3 h-3 text-emerald-400 shrink-0" />
+              <span>{hardware.androidVersion}</span>
               <span className="text-slate-600">·</span>
-              <span className="text-emerald-400 font-semibold">{currentProfile.targetFps} FPS Target</span>
+              <span className="text-blue-400 font-bold tabular-nums">
+                {hardware.isCalibratingHz ? 'Calibrando...' : `${hardware.detectedHz}Hz Tela`}
+              </span>
+              <span className="text-slate-600">·</span>
+              <span className="text-emerald-400 font-semibold">{currentProfile.targetFps} FPS Alvo</span>
             </p>
           </div>
         </div>
@@ -76,12 +83,12 @@ export const HeaderOneUI: React.FC<HeaderOneUIProps> = ({
             <Activity className="w-4 h-4 text-emerald-400" />
           </button>
 
-          {/* PWA In-App Install Button */}
+          {/* APK / PWA Install Button */}
           {isInstallable && (
             <button
               onClick={handleInstallClick}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-md shadow-blue-600/30 active:scale-95 transition-all"
-              title="Instalar RoBoost na Tela Inicial do Celular"
+              title="Instalar RoBoost Nativo no Celular"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Instalar</span>
@@ -91,7 +98,7 @@ export const HeaderOneUI: React.FC<HeaderOneUIProps> = ({
           {isInstalled && (
             <div className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-semibold">
               <CheckCircle2 className="w-3 h-3" />
-              <span>App Instalado</span>
+              <span>APK Ativo</span>
             </div>
           )}
         </div>

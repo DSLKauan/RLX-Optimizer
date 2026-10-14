@@ -8,21 +8,24 @@ import { ActiveTab, FastFlag, OptimizationProfile, ProfileId, RobloxGame } from 
 import { INITIAL_FAST_FLAGS } from './data/fastFlagsData';
 import { PROFILES } from './data/profilesData';
 import { INITIAL_GAMES } from './data/popularGames';
-import { HeaderOneUI } from './components/HeaderOneUI';
+import { HeaderUniversal } from './components/HeaderUniversal';
 import { BottomTabBar } from './components/BottomTabBar';
 import { LauncherTab } from './components/tabs/LauncherTab';
 import { FastFlagsTab } from './components/tabs/FastFlagsTab';
 import { ExportGuideTab } from './components/tabs/ExportGuideTab';
-import { S20TweaksTab } from './components/tabs/S20TweaksTab';
+import { AndroidTweaksTab } from './components/tabs/AndroidTweaksTab';
 import { LatencyTesterModal } from './components/tabs/LatencyTesterModal';
 import { CustomGameModal } from './components/tabs/CustomGameModal';
+import { useDeviceHardware } from './hooks/useDeviceHardware';
 import { triggerHaptic } from './utils/haptics';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('launcher');
-  const [selectedProfileId, setSelectedProfileId] = useState<ProfileId>('ultra120');
+  const [selectedProfileId, setSelectedProfileId] = useState<ProfileId>('ultra');
+  const hardware = useDeviceHardware();
+
   const [flags, setFlags] = useState<FastFlag[]>(() => {
-    const saved = localStorage.getItem('roboost_flags');
+    const saved = localStorage.getItem('roboost_universal_flags');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -33,11 +36,11 @@ export default function App() {
           return f;
         });
       } catch {
-        // Fallback to initial
+        // Fallback
       }
     }
-    // Default: Apply ultra120 preset to initial flags
-    const ultra = PROFILES.find((p) => p.id === 'ultra120')!;
+    // Default: Apply ultra profile
+    const ultra = PROFILES.find((p) => p.id === 'ultra')!;
     return INITIAL_FAST_FLAGS.map((f) => ({
       ...f,
       currentValue: ultra.flagOverrides[f.key] !== undefined ? ultra.flagOverrides[f.key] : f.defaultValue,
@@ -45,7 +48,7 @@ export default function App() {
   });
 
   const [games, setGames] = useState<RobloxGame[]>(() => {
-    const saved = localStorage.getItem('roboost_custom_games');
+    const saved = localStorage.getItem('roboost_universal_games');
     if (saved) {
       try {
         const custom = JSON.parse(saved);
@@ -67,8 +70,22 @@ export default function App() {
     flags.forEach((f) => {
       map[f.key] = f.currentValue;
     });
-    localStorage.setItem('roboost_flags', JSON.stringify(map));
+    localStorage.setItem('roboost_universal_flags', JSON.stringify(map));
   }, [flags]);
+
+  // Adjust ultra profile's target FPS if hardware detected a custom Hz (e.g. 90Hz, 144Hz)
+  useEffect(() => {
+    if (!hardware.isCalibratingHz && hardware.detectedHz) {
+      setFlags((prev) =>
+        prev.map((f) => {
+          if (f.key === 'DFIntTaskSchedulerTargetFps' && selectedProfileId === 'ultra') {
+            return { ...f, currentValue: hardware.detectedHz };
+          }
+          return f;
+        })
+      );
+    }
+  }, [hardware.detectedHz, hardware.isCalibratingHz, selectedProfileId]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -85,7 +102,12 @@ export default function App() {
     setFlags((prev) =>
       prev.map((f) => {
         if (targetProfile.flagOverrides[f.key] !== undefined) {
-          return { ...f, currentValue: targetProfile.flagOverrides[f.key] };
+          let val = targetProfile.flagOverrides[f.key];
+          // If ultra profile, set to real hardware detected Hz
+          if (id === 'ultra' && f.key === 'DFIntTaskSchedulerTargetFps' && hardware.detectedHz) {
+            val = hardware.detectedHz;
+          }
+          return { ...f, currentValue: val };
         }
         return f;
       })
@@ -111,7 +133,7 @@ export default function App() {
     setGames((prev) => {
       const updated = [newGame, ...prev];
       const customOnly = updated.filter((g) => g.isCustom);
-      localStorage.setItem('roboost_custom_games', JSON.stringify(customOnly));
+      localStorage.setItem('roboost_universal_games', JSON.stringify(customOnly));
       return updated;
     });
     showToast(`Jogo "${newGame.title}" adicionado ao launcher!`);
@@ -121,9 +143,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
-      {/* One UI Top Header */}
-      <HeaderOneUI
+      {/* Universal Top Header */}
+      <HeaderUniversal
         currentProfile={currentProfile}
+        hardware={hardware}
         onOpenLatencyModal={() => setLatencyModalOpen(true)}
         onQuickProfileClick={() => setActiveTab('launcher')}
       />
@@ -135,6 +158,7 @@ export default function App() {
             games={games}
             profiles={PROFILES}
             currentProfile={currentProfile}
+            hardware={hardware}
             onSelectProfile={handleSelectProfile}
             onOpenCustomGameModal={() => setCustomGameModalOpen(true)}
             onNavigateToTab={(tab) => {
@@ -158,10 +182,10 @@ export default function App() {
 
         {activeTab === 'export' && <ExportGuideTab flags={flags} />}
 
-        {activeTab === 's20plus' && <S20TweaksTab />}
+        {activeTab === 'system' && <AndroidTweaksTab hardware={hardware} />}
       </main>
 
-      {/* Floating Samsung One UI Toast Notification */}
+      {/* Floating Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-blue-600/95 text-white font-semibold text-xs shadow-xl shadow-blue-600/30 border border-blue-400/40 backdrop-blur-md animate-bounce duration-300 flex items-center gap-2 max-w-[90vw]">
           <span className="w-2 h-2 rounded-full bg-emerald-300 shrink-0" />
@@ -181,7 +205,7 @@ export default function App() {
         onAddGame={handleAddCustomGame}
       />
 
-      {/* Mobile One UI Bottom Tab Bar */}
+      {/* Bottom Navigation Bar */}
       <BottomTabBar activeTab={activeTab} onChangeTab={setActiveTab} />
     </div>
   );

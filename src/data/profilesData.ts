@@ -2,13 +2,13 @@ import { OptimizationProfile } from '../types';
 
 export const PROFILES: OptimizationProfile[] = [
   {
-    id: 'ultra120',
-    name: 'S20+ 120Hz Ultra Fluido',
-    subtitle: 'Máxima suavidade no display Dynamic AMOLED 2X',
-    description: 'Desbloqueia os 120 FPS nativos da tela do Galaxy S20+, ajustando sombras e pós-processamento para manter 120Hz sustentados.',
+    id: 'ultra',
+    name: 'Ultra Fluido (Taxa Máxima)',
+    subtitle: 'Aproveita telas de 90Hz, 120Hz ou 144Hz',
+    description: 'Desbloqueia a taxa máxima suportada pela tela do seu celular, otimizando sombras e shaders para manter a fluidez máxima sem engasgos.',
     targetFps: 120,
     color: '#3B82F6',
-    badge: '120Hz',
+    badge: 'Ultra Hz',
     flagOverrides: {
       DFIntTaskSchedulerTargetFps: 120,
       FFlagDebugDisplayFPS: true,
@@ -26,8 +26,8 @@ export const PROFILES: OptimizationProfile[] = [
   {
     id: 'potato',
     name: 'Batata / Competitivo (Max FPS)',
-    subtitle: 'Zero lag para Blox Fruits, Raids e PvP',
-    description: 'Remove completamente sombras, grama, efeitos de luz e texturas pesadas. Ideal para eliminar engasgos em lutas com muitos players.',
+    subtitle: 'Zero lag para celulares básicos e fracos',
+    description: 'Remove completamente sombras, grama 3D, efeitos de luz e texturas pesadas. Ideal para Blox Fruits, Raids e PvP sem travamento.',
     targetFps: 120,
     color: '#10B981',
     badge: 'Max FPS',
@@ -47,9 +47,9 @@ export const PROFILES: OptimizationProfile[] = [
   },
   {
     id: 'balanced',
-    name: 'Equilibrado One UI',
-    subtitle: 'Gráficos agradáveis e FPS estável',
-    description: 'Cravado em 60 FPS com gráficos bonitos e sombras atenuadas, proporcionando uma jogabilidade suave com baixo consumo de bateria.',
+    name: 'Equilibrado Universal',
+    subtitle: 'Gráficos agradáveis e 60 FPS cravados',
+    description: 'Estável em 60 FPS com gráficos bonitos e sombras moderadas, proporcionando excelente equilíbrio entre visual e duração da bateria.',
     targetFps: 60,
     color: '#8B5CF6',
     badge: '60 FPS',
@@ -70,8 +70,8 @@ export const PROFILES: OptimizationProfile[] = [
   {
     id: 'cool',
     name: 'Anti-Aquecimento & Bateria',
-    subtitle: 'Evita thermal throttling no Exynos e Snapdragon',
-    description: 'Projetado especialmente para sessões longas de jogo no Galaxy S20+, reduzindo a carga térmica da GPU para evitar que o celular esquente.',
+    subtitle: 'Evita thermal throttling e poupa carga',
+    description: 'Projetado para sessões longas de jogo em qualquer processador (Snapdragon, MediaTek, Exynos ou Unisoc), mantendo o aparelho frio.',
     targetFps: 60,
     color: '#F59E0B',
     badge: 'Frio',

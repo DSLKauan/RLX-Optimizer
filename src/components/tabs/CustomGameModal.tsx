@@ -76,7 +76,7 @@ export const CustomGameModal: React.FC<CustomGameModalProps> = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-white leading-none">Adicionar Jogo</h3>
-              <p className="text-[11px] text-slate-400 mt-0.5">Criar atalho para o S20+</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">Criar atalho para o Android</p>
             </div>
           </div>
           <button
@@ -131,8 +131,8 @@ export const CustomGameModal: React.FC<CustomGameModalProps> = ({
             <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">
               Meta de FPS
             </label>
-            <div className="grid grid-cols-3 gap-2">
-              {[60, 90, 120].map((fps) => (
+            <div className="grid grid-cols-4 gap-1.5">
+              {[60, 90, 120, 144].map((fps) => (
                 <button
                   type="button"
                   key={fps}

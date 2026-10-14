@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gamepad2, SlidersHorizontal, FileDown, Cpu } from 'lucide-react';
+import { Gamepad2, SlidersHorizontal, FileDown, Smartphone } from 'lucide-react';
 import { ActiveTab } from '../types';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -13,7 +13,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ activeTab, onChangeT
     { id: 'launcher', label: 'Launcher', icon: Gamepad2 },
     { id: 'fastflags', label: 'FastFlags', icon: SlidersHorizontal },
     { id: 'export', label: 'Exportar', icon: FileDown },
-    { id: 's20plus', label: 'S20+ Boost', icon: Cpu },
+    { id: 'system', label: 'Sistema & APK', icon: Smartphone },
   ];
 
   return (
@@ -32,7 +32,6 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ activeTab, onChangeT
               }}
               className="group flex flex-col items-center justify-center h-full relative transition-all active:scale-95"
             >
-              {/* Tab Active Glow Indicator (One UI Style) */}
               <div
                 className={`flex items-center justify-center w-12 h-8 rounded-full transition-all duration-200 ${
                   isActive

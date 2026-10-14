@@ -1,34 +1,36 @@
 import React, { useState } from 'react';
 import { 
   Play, 
-  Sparkles, 
   Flame, 
   Gauge, 
   Search, 
   Plus, 
   Share2, 
-  ExternalLink, 
-  Smartphone, 
   Check, 
   Zap,
+  Smartphone,
+  Cpu,
   Layers
 } from 'lucide-react';
 import { RobloxGame, OptimizationProfile, ProfileId } from '../../types';
 import { triggerHaptic } from '../../utils/haptics';
+import { DeviceHardwareInfo } from '../../hooks/useDeviceHardware';
 
 interface LauncherTabProps {
   games: RobloxGame[];
   profiles: OptimizationProfile[];
   currentProfile: OptimizationProfile;
+  hardware: DeviceHardwareInfo;
   onSelectProfile: (id: ProfileId) => void;
   onOpenCustomGameModal: () => void;
-  onNavigateToTab: (tab: 'fastflags' | 'export' | 's20plus') => void;
+  onNavigateToTab: (tab: 'fastflags' | 'export' | 'system') => void;
 }
 
 export const LauncherTab: React.FC<LauncherTabProps> = ({
   games,
   profiles,
   currentProfile,
+  hardware,
   onSelectProfile,
   onOpenCustomGameModal,
   onNavigateToTab,
@@ -60,8 +62,6 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
 
     // Protocol URI for Android: roblox://placeId=...
     const directUri = `roblox://placeId=${game.placeId}`;
-    
-    // Attempt launching native Android intent
     window.location.href = directUri;
 
     setTimeout(() => {
@@ -71,7 +71,6 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
 
   const launchRobloxApp = () => {
     triggerHaptic('success');
-    // Open Roblox main home
     window.location.href = 'roblox://';
   };
 
@@ -85,7 +84,7 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
 
   return (
     <div className="space-y-5 pb-24">
-      {/* S20+ AMOLED 120Hz Performance Banner (One UI Card) */}
+      {/* Universal Android Hardware & Profile Banner */}
       <section className="rounded-3xl bg-gradient-to-br from-[#162036] via-[#101726] to-[#0A0E17] border border-blue-500/20 p-5 shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -126,19 +125,25 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
           </div>
         </div>
 
-        {/* Quick S20+ Hardware Stats Strip */}
+        {/* Real Dynamic Hardware Diagnostic Strip */}
         <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center">
           <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span className="block text-[10px] uppercase font-bold text-slate-400">Display</span>
-            <span className="text-xs font-extrabold text-blue-400">120Hz AMOLED</span>
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Taxa de Tela</span>
+            <span className="text-xs font-extrabold text-blue-400 tabular-nums">
+              {hardware.isCalibratingHz ? 'Medindo...' : `${hardware.detectedHz}Hz Real`}
+            </span>
           </div>
           <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span className="block text-[10px] uppercase font-bold text-slate-400">Carga de GPU</span>
-            <span className="text-xs font-extrabold text-emerald-400">-35% Alívio</span>
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Processador</span>
+            <span className="text-xs font-extrabold text-emerald-400">
+              {hardware.cpuCores} Núcleos CPU
+            </span>
           </div>
           <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span className="block text-[10px] uppercase font-bold text-slate-400">Injeção</span>
-            <span className="text-xs font-extrabold text-indigo-400">ZArchiver / SAF</span>
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Plataforma</span>
+            <span className="text-xs font-extrabold text-indigo-400">
+              {hardware.androidVersion} APK
+            </span>
           </div>
         </div>
       </section>
@@ -148,7 +153,7 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
         <div className="flex items-center justify-between px-1">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
             <Gauge className="w-3.5 h-3.5 text-blue-400" />
-            <span>Mudar Perfil de Otimização</span>
+            <span>Perfis de Otimização Universal</span>
           </h3>
           <button
             onClick={() => onNavigateToTab('fastflags')}
@@ -205,7 +210,7 @@ export const LauncherTab: React.FC<LauncherTabProps> = ({
               </span>
             </h3>
             <p className="text-xs text-slate-400">
-              Clique em jogar para abrir direto no aplicativo oficial do Roblox
+              Inicie com 1 toque no app oficial do Roblox via roblox://
             </p>
           </div>
 

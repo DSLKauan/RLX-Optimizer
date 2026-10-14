@@ -1,4 +1,4 @@
-export type ActiveTab = 'launcher' | 'fastflags' | 'export' | 's20plus';
+export type ActiveTab = 'launcher' | 'fastflags' | 'export' | 'system';
 
 export interface RobloxGame {
   id: string;
@@ -25,10 +25,10 @@ export interface FastFlag {
   currentValue: boolean | number;
   options?: { label: string; value: number }[];
   impact: 'Alto FPS' | 'Médio FPS' | 'Qualidade' | 'Estabilidade';
-  recommendedForS20: boolean;
+  recommendedForAndroid: boolean;
 }
 
-export type ProfileId = 'ultra120' | 'potato' | 'balanced' | 'cool';
+export type ProfileId = 'ultra' | 'potato' | 'balanced' | 'cool';
 
 export interface OptimizationProfile {
   id: ProfileId;
@@ -41,13 +41,14 @@ export interface OptimizationProfile {
   flagOverrides: Record<string, boolean | number>;
 }
 
-export interface S20Tweak {
+export interface AndroidTweak {
   id: string;
   title: string;
-  category: 'Tela 120Hz' | 'Resfriamento' | 'Samsung GOS' | 'Resolução & GPU';
+  category: 'Tela & Hz' | 'Game Boosters' | 'Resolução & GPU' | 'Memória & RAM' | 'APK Nativo';
   impact: string;
   description: string;
   steps: string[];
   command?: string;
   recommendedSetting: string;
+  applicableBrands?: string;
 }

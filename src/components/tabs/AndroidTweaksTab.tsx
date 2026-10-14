@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import { 
   Smartphone, 
   Cpu, 
-  Flame, 
   Check, 
   Copy, 
-  Tv, 
-  ShieldCheck, 
-  Sliders, 
   ChevronDown, 
   ChevronUp,
-  Sparkles,
-  Info
+  Download,
+  Terminal,
+  ShieldCheck,
+  Zap,
+  Package
 } from 'lucide-react';
-import { S20_TWEAKS } from '../../data/s20TweaksData';
+import { ANDROID_TWEAKS } from '../../data/androidTweaksData';
 import { triggerHaptic } from '../../utils/haptics';
+import { DeviceHardwareInfo } from '../../hooks/useDeviceHardware';
 
-export const S20TweaksTab: React.FC = () => {
+interface AndroidTweaksTabProps {
+  hardware: DeviceHardwareInfo;
+}
+
+export const AndroidTweaksTab: React.FC<AndroidTweaksTabProps> = ({ hardware }) => {
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
-  const [expandedId, setExpandedId] = useState<string | null>('refresh-rate-lock');
+  const [expandedId, setExpandedId] = useState<string | null>('apk-native-build');
+  const [scriptDownloaded, setScriptDownloaded] = useState(false);
 
   const handleCopyCommand = (command: string, id: string) => {
     triggerHaptic('success');
@@ -32,64 +37,106 @@ export const S20TweaksTab: React.FC = () => {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  const handleDownloadApkBuildScript = () => {
+    triggerHaptic('success');
+    const scriptContent = `#!/bin/bash
+# RoBoost Mobile - Script de Compilacao APK Nativo (Capacitor)
+echo "=== Compilando RoBoost Mobile APK Nativo ==="
+npm run build
+npx cap sync android
+echo "Projeto sincronizado com sucesso!"
+echo "Para gerar o APK debug execute:"
+echo "cd android && ./gradlew assembleDebug"
+echo "O APK estara em: android/app/build/outputs/apk/debug/app-debug.apk"
+`;
+    const blob = new Blob([scriptContent], { type: 'text/x-shellscript' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'build-apk.sh';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    setScriptDownloaded(true);
+    setTimeout(() => setScriptDownloaded(false), 3000);
+  };
+
   return (
     <div className="space-y-5 pb-24">
-      {/* S20+ Hardware Specs Card */}
+      {/* Universal Hardware & APK Engine Overview Card */}
       <section className="rounded-3xl bg-gradient-to-br from-[#162138] to-[#0E1524] border border-blue-500/30 p-5 shadow-xl relative overflow-hidden">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center gap-1">
-            <Smartphone className="w-3 h-3 text-blue-400" />
-            Perfil de Hardware S20+
+            <Package className="w-3 h-3 text-blue-400" />
+            Capacitor Native APK Engine
           </span>
-          <span className="text-xs text-slate-400 font-semibold">Exynos 990 / SD865</span>
+          <span className="text-xs text-slate-400 font-semibold">
+            Package: com.roboost.launcher
+          </span>
         </div>
 
         <h2 className="text-lg font-bold text-white tracking-tight">
-          Otimizações Exclusivas para Samsung S20+
+          Central do APK Nativo & Otimizações do Sistema
         </h2>
         <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-          O Galaxy S20+ possui tela Dynamic AMOLED 2X de 120Hz e até 12GB de RAM, mas sofre com aquecimento e queda de clock se não estiver bem configurado.
+          Estruturado para rodar como aplicativo nativo em qualquer aparelho Android (Samsung, Xiaomi, Motorola, Realme, etc.), aproveitando aceleradores de hardware e evitando limitações de navegadores.
         </p>
 
-        {/* 3 Quick Tips */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="text-[11px] font-bold text-blue-400 uppercase tracking-wider mb-1">
-              1. Resolução
-            </div>
-            <p className="text-[11px] text-slate-300">
-              Mantenha o visor em <strong>FHD+</strong>. O modo WQHD+ (1440p) bloqueia os 120Hz e superaquece o Exynos.
-            </p>
+        {/* Dynamic Hardware Grid */}
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Taxa Medida</span>
+            <span className="text-xs font-extrabold text-blue-400 tabular-nums">
+              {hardware.isCalibratingHz ? 'Medindo...' : `${hardware.detectedHz}Hz`}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Processador</span>
+            <span className="text-xs font-extrabold text-emerald-400">
+              {hardware.cpuCores} Threads
+            </span>
+          </div>
+          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Memória RAM</span>
+            <span className="text-xs font-extrabold text-purple-400">
+              {hardware.deviceRamGb ? `${hardware.deviceRamGb} GB` : 'Disponível'}
+            </span>
+          </div>
+          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <span className="block text-[10px] uppercase font-bold text-slate-400">Sistema</span>
+            <span className="text-xs font-extrabold text-indigo-400">
+              {hardware.androidVersion}
+            </span>
+          </div>
+        </div>
+
+        {/* Quick APK Script Download Button */}
+        <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-xs text-slate-300">
+            <strong className="text-white block">Compilar APK no Celular ou PC:</strong>
+            <span className="text-[11px] text-slate-400">Use o script oficial do Capacitor para compilar seu arquivo .apk</span>
           </div>
 
-          <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
-              2. Modo Prioridade
-            </div>
-            <p className="text-[11px] text-slate-300">
-              No Game Booster da Samsung, ative o <strong>Modo Prioridade</strong> para fechar processos secundários.
-            </p>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="text-[11px] font-bold text-purple-400 uppercase tracking-wider mb-1">
-              3. RAM Plus
-            </div>
-            <p className="text-[11px] text-slate-300">
-              Deixe em <strong>2GB ou desligado</strong> para evitar que a memória virtual lenta gere engasgos de leitura.
-            </p>
-          </div>
+          <button
+            onClick={handleDownloadApkBuildScript}
+            className="w-full sm:w-auto h-10 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-blue-600/30 active:scale-95 transition-all shrink-0"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>{scriptDownloaded ? 'Script Baixado!' : 'Baixar Script APK'}</span>
+          </button>
         </div>
       </section>
 
-      {/* Tweaks List */}
+      {/* System Tweaks Accordion */}
       <section className="space-y-3">
         <h3 className="text-base font-bold text-white tracking-tight px-1">
-          Guia de Ajustes do Sistema One UI
+          Guia de Otimizações por Fabricante
         </h3>
 
         <div className="space-y-3">
-          {S20_TWEAKS.map((tweak) => {
+          {ANDROID_TWEAKS.map((tweak) => {
             const isExpanded = expandedId === tweak.id;
 
             return (
@@ -104,13 +151,18 @@ export const S20TweaksTab: React.FC = () => {
                   className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-850/40 transition-colors"
                 >
                   <div className="space-y-1 pr-2">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-blue-400 border border-slate-700">
                         {tweak.category}
                       </span>
                       <span className="text-[10px] font-semibold text-emerald-400">
                         {tweak.impact}
                       </span>
+                      {tweak.applicableBrands && (
+                        <span className="text-[10px] text-slate-400 font-medium hidden sm:inline">
+                          · {tweak.applicableBrands}
+                        </span>
+                      )}
                     </div>
                     <h4 className="text-sm font-bold text-white">{tweak.title}</h4>
                   </div>
@@ -129,7 +181,7 @@ export const S20TweaksTab: React.FC = () => {
 
                     <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80">
                       <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                        Como Configurar:
+                        Passo a Passo de Configuração:
                       </span>
                       {tweak.steps.map((step, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-xs text-slate-300">
@@ -139,7 +191,7 @@ export const S20TweaksTab: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Copyable Shell/ADB Command if present */}
+                    {/* Copyable Command if present */}
                     {tweak.command && (
                       <div className="space-y-1.5">
                         <span className="text-[10px] uppercase font-bold text-slate-400 block">

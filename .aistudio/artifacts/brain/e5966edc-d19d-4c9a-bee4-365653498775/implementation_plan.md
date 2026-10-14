@@ -1,102 +1,99 @@
-# RoBoost Launcher & Optimizer para Android (Samsung Galaxy S20+)
+# RoBoost Mobile: Universal Roblox Launcher & Optimizer (APK Edition)
 
-Aplicativo completo de launcher e otimizador de desempenho para Roblox no Android, desenhado sob a linguagem de design Samsung One UI. Ele permite ajustar parâmetros gráficos avançados, gerar arquivos de FastFlags (`ClientAppSettings.json`) para desbloquear FPS e reduzir texturas pesadas, configurar o display de 120Hz do Galaxy S20+ e iniciar jogos diretamente via protocolo `roblox://`.
+Reformulação completa do aplicativo para funcionar como uma solução universal para **qualquer celular Android** (Samsung, Xiaomi/Poco, Motorola, Realme, Infinix, etc.) e suporte à arquitetura nativa com **Capacitor** para geração e instalação de APK.
 
 ---
 
 ## Decisões Confirmadas com o Usuário
 
 > [!IMPORTANT]
-> - **Foco Principal**: Hub Completo integrando Otimizador FastFlags, Game Booster e Launcher com protocolo `roblox://`.
-> - **Método de Aplicação no Android (S20+)**: Perfis prontos de desempenho com exportação direta de arquivos (`ClientAppSettings.json`, scripts e presets) com guia interativo passo a passo para o gerenciador de arquivos (ZArchiver / SAF) e Shizuku.
-> - **Identidade Visual**: Samsung One UI limpa e moderna, com paleta dark/light suave, cantos arredondados (squircle One UI), tipografia legível, botões de toque com tamanho ergonômico (≥48px) para uso com uma mão na tela de 6,7" do S20+.
+> - **Nome Oficial Genérico**: **RoBoost Mobile: Universal Roblox Launcher** (todas as menções fixas a "Galaxy S20+", "Exynos 990" e modelos específicos foram eliminadas).
+> - **Arquitetura APK Nativa**: Adição do Capacitor (`@capacitor/core`, `@capacitor/android`, `capacitor.config.ts`, estrutura `android/` com `AndroidManifest.xml` e build Gradle) permitindo empacotamento nativo em APK além da instalação universal como PWA.
+> - **Detecção Automática de Hardware**: Algoritmo em tempo real que afere a taxa de atualização real da tela do usuário (60Hz, 90Hz, 120Hz ou 144Hz) através de amostragem `requestAnimationFrame`, identifica a memória RAM disponível (`navigator.deviceMemory`) e o status da bateria, adaptando os perfis dinamicamente.
+> - **Perfis Universais de Desempenho**:
+>   1. *Ultra Fluido (Display Máximo do Aparelho)*: Desbloqueia a taxa nativa da tela do celular conectado (90Hz, 120Hz ou 144Hz).
+>   2. *Batata / Competitivo (Max FPS)*: Redução drástica de texturas e remoção de sombras para celulares de entrada / básicos.
+>   3. *Equilibrado Universal*: 60 FPS com gráficos médios para celulares intermediários.
+>   4. *Modo Frio & Bateria*: Limite de calor e economia de energia para qualquer chip (Snapdragon, MediaTek Helio/Dimensity, Unisoc ou Exynos).
 
 ---
 
 ## 1. Visão Geral e Conceito Central
 
-### O que o aplicativo faz
-O **RoBoost S20+ Edition** transforma a experiência de jogar Roblox no Galaxy S20+ (Snapdragon 865 ou Exynos 990), eliminando travamentos causados por thermal throttling e resolução nativa excessiva (QHD+/FHD+):
-1. **Launcher de Jogos Direto**: Catálogo de jogos favoritos e recentes com botão "Jogar Agora" acionando a URI nativa `roblox://placeId=...` ou abrindo o app oficial instantaneamente.
-2. **Gerador e Editor de FastFlags (Estilo Bloxstrap para Android)**:
-   - Desbloqueador de FPS (60, 90, 120 FPS para a tela fluida de 120Hz do S20+).
-   - Redutor de partículas, sombras dinâmicas, iluminação Future-to-Voxel e pós-processamento.
-   - Texturas otimizadas e renderizador Vulkan / GLES ajustado.
-   - Presets prontos: **Ultra Fluido 120Hz** (foco em suavidade), **Batata / Competitivo** (máximo FPS para jogos pesados como Blox Fruits/Bedwars), **Equilibrado One UI** e **Economia de Bateria / Baixa Temperatura**.
-3. **Game Booster S20+ & Guia One UI**:
-   - Recomendações e comandos de otimização específicos da Samsung (Game Plugins, Perf Z, GOS Priority Mode, RAM Plus, Resolução via ADB/Shizuku).
-   - Injetor e exportador de `ClientAppSettings.json` com guia visual passo a passo para colocar na pasta do Roblox via SAF ou ZArchiver sem precisar de computador.
-4. **PWA Mobile-First**:
-   - Instalável na tela inicial do celular pelo Chrome/Samsung Internet com 1 toque, funcionando offline e sem barras de navegação do browser.
+### O que o novo aplicativo entrega
+O **RoBoost Mobile** agora é um ecossistema completo para qualquer jogador de Roblox no Android:
+1. **Suporte a APK Nativo com Capacitor**:
+   - Configuração de build Capacitor (`capacitor.config.ts`) com ID de pacote `com.roboost.launcher`, permissões de rede, armazenamento e deep links.
+   - Central de Instalação e Compilação de APK: instruções e scripts para compilar o APK diretamente no celular usando Termux/AIDE ou via Android Studio.
+2. **Hardware Diagnostic Engine**:
+   - Painel dinâmico que detecta a tela do aparelho atual (calcula se o celular está em 60Hz, 90Hz ou 120Hz+), quantifica a memória RAM e alerta se o aparelho está no modo de economia de energia.
+3. **Launcher Universal com Deep Links (`roblox://`)**:
+   - Catálogo com pesquisa, filtros e suporte a jogos personalizados por link ou Place ID.
+   - Inicia partidas instantaneamente no Roblox oficial em qualquer versão de Android (Android 9 a 15).
+4. **Gerador Universal de FastFlags (`ClientAppSettings.json`)**:
+   - Ajuste universal de sombras, pós-processamento, terreno, partículas e FPS.
+   - Guia de injeção adaptado para qualquer fabricante (ZArchiver com SAF, Shizuku e Termux).
+5. **Painel de Otimizações de Sistema para Todos os Fabricantes**:
+   - Dicas e comandos universais para Xiaomi (Game Turbo), Samsung (Game Booster), Motorola (Moto Gametime) e genéricos Android (escala de resolução ADB, desativação de swap lento, etc.).
 
 ---
 
-## 2. Experiência do Usuário e Design Visual (Samsung One UI)
-
-### Estilo e Identidade
-- **DNA One UI**: Cabeçalhos amplos e acolhedores no topo, facilitando o alcance dos dedos na metade inferior da tela de 6,7 polegadas do S20+. Cantos suaves (`rounded-2xl` e `rounded-3xl`), sombras discretas e cartões de agrupamento limpos.
-- **Paleta de Cores**:
-  - *Fundo principal*: `#0B0F19` (Modo Noturno Profundo AMOLED para economizar bateria no display Dynamic AMOLED 2X do S20+) ou `#F4F6FB` no modo claro.
-  - *Superfícies*: `#161D2F` com bordas sutis `rgba(255, 255, 255, 0.08)`.
-  - *Acentos One UI*: Azul Samsung `#2D68FF` / `#4C82FF` e Verde de Eficiência `#10B981`.
-- **Navegação Ergonômica Inferior (Bottom Navigation Bar)**:
-  - **Início / Launcher**: Monitor de status, seleção de perfil rápido e jogos em destaque com botão de lançamento imediato.
-  - **Otimizador / FastFlags**: Toggles detalhados de FPS, sombras, texturas, iluminação e renderizador.
-  - **Exportar & Instalar**: Gerador do arquivo `ClientAppSettings.json`, download direto e tutorial interativo com imagens/diagramas de injeção no S20+.
-  - **Ajustes S20+**: Dicas de Game Booster, taxa de 120Hz forçada, resolução e resfriamento do Exynos/Snapdragon.
-
----
-
-## 3. Decisões Técnicas e Funcionalidades Detalhadas
+## 2. Experiência do Usuário e Design Visual Universal
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                   ROBOOST HUB - SAMSUNG GALAXY S20+                    │
+│               ROBOOST MOBILE - UNIVERSAL ROBLOX HUB                    │
 ├────────────────────────────────┬───────────────────────────────────────┤
-│        LAUNCHER ENGINE         │          OPTIMIZER ENGINE             │
-│  - roblox:// URI Launcher      │  - FastFlag Parser & JSON Generator   │
-│  - Catálogo de Games Populares │  - Presets (120Hz, Batata, Equilibrado)│
-│  - Jogos Personalizados        │  - Texture, Shadow & Shader Toggles   │
+│    HARDWARE AUTO-DETECTOR      │           APK & NATIVE CORE           │
+│  - Taxa da tela (60/90/120Hz)  │  - Capacitor Native Android Engine    │
+│  - Memória RAM detectada       │  - Central de Download/Geração APK    │
+├────────────────────────────────┼───────────────────────────────────────┤
+│       LAUNCHER UNIVERSAL       │          OPTIMIZER FASTFLAGS          │
+│  - roblox:// PlaceId Launcher  │  - Perfis para Fraco, Médio e Avançado│
+│  - Catálogo de Jogos & Busca   │  - Editor de Sombras, Texturas e FPS  │
 ├────────────────────────────────┴───────────────────────────────────────┤
-│                       PAINEL S20+ ONE UI TOOLS                         │
-│  - Guia SAF / ZArchiver para /Android/data                             │
-│  - Shizuku & Termux comandos de resolução (ex: wm size 720x1600)       │
-│  - One UI Game Booster / Perf Z / 120Hz Refresh Rate Lock              │
-├────────────────────────────────────────────────────────────────────────┤
-│                       PWA / STORAGE / EXPORT                           │
-│  - Salva preferências no LocalStorage                                  │
-│  - Download de ClientAppSettings.json pronto com 1 clique              │
-│  - Instalador PWA nativo na tela inicial do celular                    │
+│                    GUIA SAF / SHIZUKU UNIVERSAL                        │
+│  - Compatível com Android 9, 10, 11, 12, 13, 14 e 15                   │
+│  - Exportação direta de ClientAppSettings.json                         │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-1. **Geração de Arquivo `ClientAppSettings.json`**:
-   - Cria o arquivo de configuração de FastFlags idêntico ao usado pelas comunidades de otimização de Roblox mobile.
-   - Suporte a cópia do JSON para área de transferência ou download direto do arquivo com o nome correto.
-2. **Guia Passo a Passo sem PC**:
-   - Explicação ilustrada de como contornar a restrição de pasta do Android 11/12/13 no Galaxy S20+ usando o ZArchiver com Storage Access Framework (SAF) ou Shizuku.
-3. **Lançador Direto de Jogos**:
-   - Permite adicionar Place IDs ou links do Roblox (como Blox Fruits, Brookhaven, Blade Ball, Arsenal, Da Hood).
-   - Ao clicar em "Iniciar", aciona o Intent/Deep Link `roblox://placeId={id}` que abre o jogo diretamente no app oficial do Roblox instalado no S20+.
-4. **Calculadora e Testador de Latência / Ping**:
-   - Teste de tempo de resposta com servidores do Roblox para selecionar melhores horários de jogo.
+- **Interface Universal Gamer & Moderna**: Paleta dark elegante e neutra (preto profundo `#0B0F19`, acentos azul elétrico `#3B82F6` e verde neon `#10B981`), com botões ergonômicos de toque e sem referências a uma única marca.
+- **Navegação em 4 Abas**:
+  1. **Launcher**: Jogos com lançamento rápido e status de tela detectada.
+  2. **FastFlags**: Toggles e seletor de FPS calibrado para a taxa real do aparelho.
+  3. **Exportar JSON**: Download e guia universal ZArchiver / Shizuku.
+  4. **APK & Sistema**: Painel do APK nativo Capacitor, comandos ADB universais e guia por fabricante.
 
 ---
 
-## 4. Plano de Implementação
+## 3. Principais Alterações Técnicas
 
-1. **Instalação e Setup de Dependências**:
-   - Ícones com `lucide-react` e suporte PWA.
-2. **Desenvolvimento da Camada de Dados e FastFlags**:
-   - Definição do catálogo de FastFlags testadas para mobile (FPS unlock, disable shadows, low poly terrains, rendering backend, particles).
-   - Criação dos 4 perfis de fábrica + personalização total pelo usuário.
-3. **Desenvolvimento dos Módulos da Interface (One UI)**:
-   - `HeaderOneUI` e `BottomTabBar`: navegação por toque fluida.
-   - `LauncherTab`: cartões de jogos rápidos, botão de iniciar com deep-link `roblox://` e status do perfil ativo.
-   - `FastFlagsOptimizerTab`: toggles táteis One UI com feedback sonoro/vibração (haptic feedback API).
-   - `S20PlusTweaksTab`: configurações de 120Hz, dicas térmicas e comandos de resolução para o S20+.
-   - `ExportGuideTab`: assistente de instalação com visualizador de JSON, botão de download e passo a passo.
-4. **Configuração de Manifesto PWA e Ícone**:
-   - Configurar `index.html` e `manifest.json` com título "RoBoost S20+" e suporte a tela cheia no Android.
-5. **Verificação e Compilação**:
-   - Testar build com `compile_applet`.
+1. **Remoção de referências ao S20+**:
+   - Limpeza em `metadata.json`, `index.html`, `public/manifest.json`, `public/icon.svg` e todos os arquivos em `src/`.
+   - Substituição por termos universais: "RoBoost Mobile", "Qualquer Android", "Taxa de Atualização Detectada".
+2. **Integração do Capacitor**:
+   - Instalação de `@capacitor/core` e `@capacitor/cli`.
+   - Criação de `capacitor.config.json` / `capacitor.config.ts` com configurações de App ID `com.roboost.launcher`, nome do app e esquemas de deep link.
+3. **Módulo de Diagnóstico de Hardware (`useDeviceHardware.ts`)**:
+   - Medição ativa da taxa de quadros do display usando `requestAnimationFrame` em um loop de 60 frames para calcular se a tela é 60Hz, 90Hz, 120Hz ou 144Hz.
+   - Leitura de núcleos de CPU (`navigator.hardwareConcurrency`) e RAM (`navigator.deviceMemory`).
+4. **Aba "APK & Sistema"**:
+   - Status da integração nativa Capacitor.
+   - Opções para baixar o pacote do projeto pronto para gerar APK no celular via Termux/AIDE ou PC via Android Studio.
+   - Ajustes de resolução universais aplicáveis a qualquer Android.
+
+---
+
+## 4. Plano de Execução
+
+1. **Instalação de Pacotes**: Instalar `@capacitor/core` e `@capacitor/cli`.
+2. **Configuração do Capacitor**: Criar `capacitor.config.ts` e arquivos de manifesto Android.
+3. **Atualização dos Metadados**: Renomear em `metadata.json`, `index.html`, `manifest.json` e `icon.svg`.
+4. **Criação do Hook de Diagnóstico de Hardware (`src/hooks/useDeviceHardware.ts`)**: Medição em tempo real de Hz e recursos.
+5. **Atualização dos Dados e Perfis (`profilesData.ts`, `s20TweaksData.ts` -> `androidTweaksData.ts`)**: Generalizar para todos os celulares Android.
+6. **Atualização dos Componentes**:
+   - `HeaderOneUI.tsx` -> `HeaderUniversal.tsx` (mostra o modelo detectado ou "Android Universal" + Hz medido).
+   - `S20TweaksTab.tsx` -> `AndroidTweaksTab.tsx` (guia para Xiaomi, Samsung, Motorola e comandos universais + central de APK).
+   - `LauncherTab.tsx`, `FastFlagsTab.tsx`, `ExportGuideTab.tsx`, `App.tsx`.
+7. **Compilação e Verificação**: Executar `compile_applet` e garantir zero erros de build.

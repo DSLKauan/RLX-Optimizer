@@ -3,15 +3,10 @@ import {
   Download, 
   Copy, 
   Check, 
-  FolderPlus, 
-  Smartphone, 
-  Terminal, 
-  AlertCircle, 
-  ChevronRight, 
   CheckCircle2, 
   FileCode,
   FolderTree,
-  ExternalLink
+  Smartphone
 } from 'lucide-react';
 import { FastFlag } from '../../types';
 import { triggerHaptic } from '../../utils/haptics';
@@ -67,14 +62,14 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
           <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
             Pronto para Instalação
           </span>
-          <span className="text-xs text-slate-400">Arquivo Oficial Bloxstrap</span>
+          <span className="text-xs text-slate-400">Universal Android (Qualquer Aparelho)</span>
         </div>
 
         <h2 className="text-lg font-bold text-white tracking-tight">
           Exportar ClientAppSettings.json
         </h2>
         <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-          Baixe o arquivo de configuração gerado para o seu Galaxy S20+ e copie para a pasta do Roblox sem precisar de computador.
+          Baixe o arquivo de configuração gerado e copie diretamente para a pasta do Roblox no seu celular sem precisar de computador.
         </p>
 
         {/* Buttons */}
@@ -111,7 +106,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
           <div className="mt-3 p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2 text-xs text-emerald-400">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>
-              O arquivo <strong>ClientAppSettings.json</strong> foi salvo na pasta <strong>Downloads</strong> do seu celular! Siga o passo a passo abaixo.
+              O arquivo <strong>ClientAppSettings.json</strong> foi salvo na pasta <strong>Downloads</strong> do seu celular! Siga o tutorial abaixo.
             </span>
           </div>
         )}
@@ -136,15 +131,15 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
         </pre>
       </section>
 
-      {/* Interactive Step-by-Step Guide for S20+ */}
+      {/* Interactive Step-by-Step Guide for Any Android */}
       <section className="space-y-3">
         <div>
           <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
             <FolderTree className="w-4 h-4 text-emerald-400" />
-            <span>Guia Passo a Passo no Galaxy S20+ (Sem PC)</span>
+            <span>Guia Passo a Passo no Celular (Sem PC)</span>
           </h3>
           <p className="text-xs text-slate-400">
-            Escolha o método mais fácil para o seu aparelho (ZArchiver com SAF ou Shizuku)
+            Funciona em qualquer aparelho Android (Samsung, Xiaomi, Motorola, Realme, etc.)
           </p>
         </div>
 
@@ -195,7 +190,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
         {activeMethod === 'zarchiver' && (
           <div className="rounded-3xl bg-[#131B2D] border border-slate-800 p-5 space-y-4">
             <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-slate-300">
-              <strong className="text-blue-400 block mb-1">Caminho de Destino no Galaxy S20+:</strong>
+              <strong className="text-blue-400 block mb-1">Caminho Universal da Pasta no Android:</strong>
               <code className="text-[11px] font-mono text-emerald-300 bg-slate-900/90 px-2 py-1 rounded block truncate">
                 /Android/data/com.roblox.client/files/ClientSettings/
               </code>
@@ -209,7 +204,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-white">Instale o ZArchiver</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Baixe gratuitamente o aplicativo <strong>ZArchiver</strong> pela Google Play Store no seu S20+.
+                    Baixe gratuitamente o aplicativo <strong>ZArchiver</strong> pela Google Play Store no seu aparelho.
                   </p>
                 </div>
               </li>
@@ -219,10 +214,10 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                   2
                 </span>
                 <div>
-                  <h5 className="text-xs font-bold text-white">Abra a pasta do Roblox</h5>
+                  <h5 className="text-xs font-bold text-white">Acesse a pasta do Roblox</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
                     No ZArchiver, navegue até: <code className="text-blue-400">Android &gt; data &gt; com.roblox.client &gt; files</code>.
-                    Quando o Android pedir permissão (SAF), toque em <strong>"Usar esta pasta"</strong> e depois em <strong>"Permitir"</strong>.
+                    Quando o Android solicitar permissão da pasta (SAF), toque em <strong>"Usar esta pasta"</strong> e confirme em <strong>"Permitir"</strong>.
                   </p>
                 </div>
               </li>
@@ -234,7 +229,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-white">Crie a pasta ClientSettings</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Se você ainda não tiver essa pasta, toque no botão <strong>+</strong> no canto e crie uma nova pasta com o nome exato: <code className="text-emerald-400">ClientSettings</code> (respeite maiúsculas e minúsculas).
+                    Caso a pasta ainda não exista, toque no botão <strong>+</strong> e crie uma nova pasta com o nome exato: <code className="text-emerald-400">ClientSettings</code> (respeitando maiúsculas e minúsculas).
                   </p>
                 </div>
               </li>
@@ -246,7 +241,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-white">Cole o ClientAppSettings.json</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Vá até a pasta <strong>Download</strong>, copie o arquivo <strong>ClientAppSettings.json</strong> que você acabou de baixar e cole dentro de <code className="text-blue-400">ClientSettings</code>.
+                    Vá até a pasta <strong>Download</strong> do seu celular, copie o arquivo <strong>ClientAppSettings.json</strong> baixado e cole dentro da pasta <code className="text-blue-400">ClientSettings</code>.
                   </p>
                 </div>
               </li>
@@ -258,7 +253,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-emerald-400">Abra o Roblox pelo Launcher!</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Feche o Roblox e abra-o novamente usando a aba <strong>Launcher</strong> do RoBoost. Seus 120 FPS e gráficos otimizados estarão ativos!
+                    Feche o Roblox e inicie seu jogo favorito pelo <strong>RoBoost Mobile</strong>. Os gráficos otimizados e a taxa máxima de quadros estarão ativos!
                   </p>
                 </div>
               </li>
@@ -270,9 +265,9 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
         {activeMethod === 'shizuku' && (
           <div className="rounded-3xl bg-[#131B2D] border border-slate-800 p-5 space-y-4">
             <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-300">
-              <strong className="text-emerald-400 block mb-1">Por que usar Shizuku no Galaxy S20+?</strong>
+              <strong className="text-emerald-400 block mb-1">Para Android 11, 12, 13, 14 ou 15 com pasta restrita:</strong>
               <p className="text-[11px] leading-relaxed">
-                Na One UI 5 (Android 13), o Google aumentou o bloqueio da pasta <code className="text-white">/Android/data</code>. O Shizuku contorna essa restrição usando Depuração Sem Fio (Wireless Debugging) nativa da Samsung, sem conectar nenhum cabo USB ou PC.
+                Em versões recentes do Android, o sistema bloqueia o acesso à pasta <code className="text-white">/Android/data</code>. O Shizuku contorna essa limitação usando a Depuração Sem Fio (Wireless Debugging) nativa do Android, sem conectar cabos nem computador.
               </p>
             </div>
 
@@ -284,7 +279,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-white">Ative a Depuração Sem Fio</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Em <strong>Configurações &gt; Opções do desenvolvedor</strong>, ative <strong>"Depuração sem fio"</strong> (conectado ao Wi-Fi).
+                    Em <strong>Configurações do Android &gt; Opções do desenvolvedor</strong>, ative <strong>"Depuração sem fio"</strong> (conectado a uma rede Wi-Fi).
                   </p>
                 </div>
               </li>
@@ -296,7 +291,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                 <div>
                   <h5 className="text-xs font-bold text-white">Pareie com o Shizuku</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Abra o app <strong>Shizuku</strong>, toque em "Parear" e insira o código de 6 dígitos da notificação da Samsung.
+                    Abra o app <strong>Shizuku</strong> (da Play Store), toque em "Pareamento" e digite o código de 6 dígitos que surgir na notificação do Android.
                   </p>
                 </div>
               </li>
@@ -306,9 +301,9 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
                   3
                 </span>
                 <div>
-                  <h5 className="text-xs font-bold text-white">Use o MT Manager ou FV File Manager</h5>
+                  <h5 className="text-xs font-bold text-white">Copie com o MT Manager ou FV File Manager</h5>
                   <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Esses gerenciadores com suporte ao Shizuku copiam o arquivo <code className="text-blue-400">ClientAppSettings.json</code> direto para a pasta do Roblox com 1 toque, sem nenhum aviso de bloqueio.
+                    Usando o gerenciador de arquivos com permissão Shizuku ativada, mova o <code className="text-blue-400">ClientAppSettings.json</code> para a pasta do Roblox com um único toque.
                   </p>
                 </div>
               </li>
@@ -320,7 +315,7 @@ export const ExportGuideTab: React.FC<ExportGuideTabProps> = ({ flags }) => {
         {activeMethod === 'termux' && (
           <div className="rounded-3xl bg-[#131B2D] border border-slate-800 p-5 space-y-4">
             <p className="text-xs text-slate-300 leading-relaxed">
-              Se você possui o <strong>Termux</strong> instalado no seu S20+ com permissão root ou Shizuku Rish, pode copiar o arquivo instantaneamente com uma única linha de comando:
+              Se você utiliza o <strong>Termux</strong> no seu celular com permissão root ou Shizuku Rish, execute a linha de comando abaixo para criar a pasta e colar o arquivo instantaneamente:
             </p>
 
             <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-[11px] text-emerald-400 overflow-x-auto select-all">

@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { 
   SlidersHorizontal, 
   RotateCcw, 
-  Check, 
   Sparkles, 
   FileDown, 
   Flame, 
-  Info, 
-  ShieldCheck,
   Zap
 } from 'lucide-react';
-import { FastFlag, FlagCategory } from '../../types';
+import { FastFlag } from '../../types';
 import { triggerHaptic } from '../../utils/haptics';
 
 interface FastFlagsTabProps {
@@ -31,7 +28,7 @@ export const FastFlagsTab: React.FC<FastFlagsTabProps> = ({
 
   const categories: { id: string; label: string }[] = [
     { id: 'all', label: 'Todas as Flags' },
-    { id: 'fps', label: 'FPS & 120Hz' },
+    { id: 'fps', label: 'FPS & Hz' },
     { id: 'graphics', label: 'Gráficos & Texturas' },
     { id: 'lighting', label: 'Sombras & Luz' },
     { id: 'physics', label: 'Física & Memória' },
@@ -64,10 +61,10 @@ export const FastFlagsTab: React.FC<FastFlagsTabProps> = ({
               </span>
             </div>
             <h2 className="text-lg font-bold text-white tracking-tight mt-1">
-              Editor de FastFlags para Android
+              Editor de FastFlags Universal
             </h2>
             <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-              Modifique parâmetros internos do motor Roblox (Bloxstrap Mobile) para desativar texturas pesadas, pós-processamento e destravar 120 FPS.
+              Ajuste os parâmetros internos do motor Roblox (Bloxstrap Mobile) para desativar texturas pesadas, pós-processamento e destravar a taxa máxima de quadros no seu celular.
             </p>
           </div>
 
@@ -116,7 +113,7 @@ export const FastFlagsTab: React.FC<FastFlagsTabProps> = ({
         ))}
       </div>
 
-      {/* Flags List (One UI Settings Group) */}
+      {/* Flags List */}
       <div className="space-y-3">
         {filteredFlags.map((flag) => {
           const isModified = flag.currentValue !== flag.defaultValue;
@@ -134,10 +131,10 @@ export const FastFlagsTab: React.FC<FastFlagsTabProps> = ({
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h4 className="text-sm font-bold text-white">{flag.label}</h4>
-                    {flag.recommendedForS20 && (
+                    {flag.recommendedForAndroid && (
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
                         <Sparkles className="w-2.5 h-2.5" />
-                        Recomendado S20+
+                        Recomendado Android
                       </span>
                     )}
                     <span className="text-[10px] font-semibold text-slate-400">
@@ -181,7 +178,7 @@ export const FastFlagsTab: React.FC<FastFlagsTabProps> = ({
                   <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
                     Selecione o Valor Desejado:
                   </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                     {flag.options.map((option) => {
                       const isOptionActive = flag.currentValue === option.value;
                       return (

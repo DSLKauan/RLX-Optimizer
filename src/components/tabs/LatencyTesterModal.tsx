@@ -104,7 +104,7 @@ export const LatencyTesterModal: React.FC<LatencyTesterModalProps> = ({ isOpen, 
           <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-slate-300 space-y-1.5">
             <div className="flex items-center gap-1.5 text-blue-400 font-semibold">
               <Zap className="w-3.5 h-3.5" />
-              <span>Dica de Conexão no Galaxy S20+</span>
+              <span>Dica de Conexão no Celular Android</span>
             </div>
             <p className="text-[11px] leading-relaxed text-slate-300">
               Conecte-se na rede Wi-Fi de <strong className="text-white">5 GHz</strong> (em vez de 2.4 GHz) para reduzir o jitter e a perda de pacotes em jogos como Blade Ball.
